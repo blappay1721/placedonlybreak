@@ -1,5 +1,5 @@
 name: PlacedOnlyBreak
-version: 0.0.2
+version: 1.0.0
 main: com.bruhnerd.placedonlybreak.PlacedOnlyBreak
 api-version: 1.21
 depend: [WorldGuard, CoreProtect]
