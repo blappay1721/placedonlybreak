@@ -1,0 +1,18 @@
+name: PlacedOnlyBreak
+version: 0.0.2
+main: com.bruhnerd.placedonlybreak.PlacedOnlyBreak
+api-version: 1.21
+depend: [WorldGuard, CoreProtect]
+
+commands:
+  pob:
+    description: PlacedOnlyBreak admin commands
+    usage: /pob <reload|arm|addregion|delregion> [...]
+
+permissions:
+  placedonlybreak.admin:
+    description: Allows /pob reload, /pob arm, /pob addregion, /pob delregion
+    default: op
+  placedonlybreak.bypass:
+    description: Bypass break restrictions in configured regions
+    default: op

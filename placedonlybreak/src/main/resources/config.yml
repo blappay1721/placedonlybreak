@@ -1,0 +1,13 @@
+regions:
+  - placedonly
+  - arena_build
+
+deny-message: "&cYou can only break player-placed blocks here."
+bypass-permission: "placedonlybreak.bypass"
+debug: false
+
+# Epoch seconds. Only blocks placed AFTER this time count as "placed" for breaking.
+# You can set these manually, or use: /pob arm <region>
+region-activated-at:
+  placedonly: 0
+  arena_build: 0
