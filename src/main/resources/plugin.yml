@@ -1,7 +1,9 @@
 name: PlacedOnlyBreak
-version: 1.0.0
+version: '${project.version}'
 main: com.bruhnerd.placedonlybreak.PlacedOnlyBreak
-api-version: 1.21
+api-version: '1.21'
+authors: [blappay1721]
+description: Only player-placed blocks can be broken in configured WorldGuard regions.
 depend: [WorldGuard, CoreProtect]
 
 commands:

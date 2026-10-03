@@ -28,7 +28,7 @@ Running `/pob arm <region>` sets the cutoff to *right now*, which is the intende
 
 - Paper 1.21.5+ (Java 21, `api-version: 1.21`)
 - [WorldGuard](https://enginehub.org/worldguard) 7.0.10+ (pulls in WorldEdit as a compile-time dependency)
-- [CoreProtect](https://www.spigotmc.org/resources/coreprotect.8631/) — the server needs its own copy installed as a plugin. It's also required at **build time**: `libs/CoreProtect.jar` is referenced as a Maven `system`-scope dependency (CoreProtect isn't published to a public Maven repo), so that jar must exist in `libs/` before running a build. It's already included in this repo.
+- [CoreProtect](https://www.spigotmc.org/resources/coreprotect.8631/) 22.4+ — installed on the server as a plugin. At build time Maven pulls the API from `maven.playpro.com`.
 
 ## Building
 
@@ -97,13 +97,11 @@ region-activated-at:
 - **Depends on CoreProtect actually logging placements.** If CoreProtect's own config excludes a world or block type, POB has no record to check and will treat the block as non-breakable (fails closed).
 - **Region matching is ID-only.** Nested/overlapping non-configured regions are ignored; only regions whose ID appears in `regions:` are considered.
 - **10-second cache TTL** is fixed in code (`CACHE_TTL_SECONDS`), not exposed in `config.yml`.
-- **`src/main/java/com/bruhnerd/App.java`** is a leftover Maven-archetype "Hello World" placeholder, unrelated to the plugin (`PlacedOnlyBreak` is the actual entry point per `plugin.yml`). Safe to delete.
 
 ## Project structure
 
 ```
 pom.xml
-libs/CoreProtect.jar                              # system-scope build dependency
 src/main/resources/plugin.yml                     # plugin metadata, command + permission registration
 src/main/resources/config.yml                     # default config, copied out on first run
 src/main/java/com/bruhnerd/placedonlybreak/
@@ -111,3 +109,7 @@ src/main/java/com/bruhnerd/placedonlybreak/
   PlacedOnlyBreakListener.java                     # BlockPlaceEvent / BlockBreakEvent logic, CoreProtect + WorldGuard queries
   PlacedOnlyBreakCommand.java                      # /pob reload|arm|addregion|delregion
 ```
+
+## License
+
+Licensed under the [GNU General Public License v3.0](LICENSE). WorldGuard/WorldEdit (GPL-3.0) and CoreProtect (Artistic-2.0) are not bundled; they're loaded from the server at runtime.
