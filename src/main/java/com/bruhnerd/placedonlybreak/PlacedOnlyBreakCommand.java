@@ -34,13 +34,13 @@ public class PlacedOnlyBreakCommand implements CommandExecutor, TabCompleter {
         String sub = args[0].toLowerCase();
 
         switch (sub) {
-            case "reload" -> {
+            case "reload": {
                 plugin.reloadConfig();
                 sender.sendMessage(color("&aPlacedOnlyBreak config reloaded."));
                 return true;
             }
 
-            case "arm" -> {
+            case "arm": {
                 if (args.length < 2) {
                     sender.sendMessage(color("&cUsage: /pob arm <region>"));
                     return true;
@@ -57,7 +57,7 @@ public class PlacedOnlyBreakCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            case "addregion" -> {
+            case "addregion": {
                 if (args.length < 2) {
                     sender.sendMessage(color("&cUsage: /pob addregion <region>"));
                     return true;
@@ -83,7 +83,7 @@ public class PlacedOnlyBreakCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            case "delregion" -> {
+            case "delregion": {
                 if (args.length < 2) {
                     sender.sendMessage(color("&cUsage: /pob delregion <region>"));
                     return true;
@@ -108,7 +108,7 @@ public class PlacedOnlyBreakCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            default -> {
+            default: {
                 sender.sendMessage(color("&cUnknown subcommand."));
                 help(sender);
                 return true;

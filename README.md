@@ -26,9 +26,27 @@ Running `/pob arm <region>` sets the cutoff to *right now*, which is the intende
 
 ## Requirements
 
-- Paper 1.21.5+ (Java 21, `api-version: 1.21`)
-- [WorldGuard](https://enginehub.org/worldguard) 7.0.10+ (pulls in WorldEdit as a compile-time dependency)
-- [CoreProtect](https://www.spigotmc.org/resources/coreprotect.8631/) 22.4+ — installed on the server as a plugin. At build time Maven pulls the API from `maven.playpro.com`.
+- Minecraft **1.13.2 – 26.3**, one jar for all of them. Built against the Spigot 1.13.2 API with Java 8 bytecode (`api-version: 1.13`), so it runs on whatever Java your server already uses.
+- [WorldGuard](https://enginehub.org/worldguard) 7.x + WorldEdit 7.x — whichever release supports your MC version.
+- [CoreProtect](https://www.spigotmc.org/resources/coreprotect.8631/) 2.16+ — whichever release supports your MC version. At build time Maven pulls the API from `maven.playpro.com`.
+
+If WorldGuard or CoreProtect fails to start (e.g. a new MC version they don't support yet), POB logs which one and disables itself instead of erroring.
+
+### Tested
+
+Each version below was run on a real Paper server with the plugin exercised end-to-end (region protect, cache path, CoreProtect path, re-arm, commands):
+
+| MC | Java | WorldEdit | WorldGuard | CoreProtect |
+|---|---|---|---|---|
+| 1.13.2 | 8 | 7.1.0 | 7.0.0 | 2.16.3 |
+| 1.16.5 | 8 | 7.2.5 | 7.0.5 | 19.5 |
+| 1.20.4 | 21 | 7.2.20 | 7.0.9 | 22.4 |
+| 1.21.11 | 21 | 7.3.18 | 7.0.15 | 23.2 |
+| 26.3 | 25 | 7.4.6-beta-02 | 7.0.19 | built from `master` (24.1 refuses to start on 26.3) |
+
+Notes:
+- **1.13.2:** WorldEdit 7.0/7.1 won't load on Paper 1.13.2 builds 656+ (their log4j update removed a class it needs). That's a WorldEdit/Paper issue, not POB.
+- **26.3:** as of Oct 2026 no CoreProtect release supports 26.3 yet; its next release will.
 
 ## Building
 

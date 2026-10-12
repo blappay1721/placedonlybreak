@@ -2,6 +2,7 @@ package com.bruhnerd.placedonlybreak;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +21,7 @@ import org.bukkit.plugin.Plugin;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionQuery;
 
 import net.coreprotect.CoreProtect;
@@ -119,7 +121,7 @@ public class PlacedOnlyBreakListener implements Listener {
 
         Set<String> regionSet = new HashSet<>();
         for (String r : regions) {
-            if (r != null && !r.isBlank()) regionSet.add(r.toLowerCase());
+            if (r != null && !r.trim().isEmpty()) regionSet.add(r.toLowerCase());
         }
         if (regionSet.isEmpty()) return false;
 
@@ -193,7 +195,7 @@ public class PlacedOnlyBreakListener implements Listener {
         ApplicableRegionSet applicable = regionQuery.getApplicableRegions(BukkitAdapter.adapt(loc));
 
         long cutoff = 0L;
-        for (var r : applicable.getRegions()) {
+        for (ProtectedRegion r : applicable.getRegions()) {
             String id = r.getId().toLowerCase();
             if (!isConfiguredRegion(id)) continue;
 
@@ -214,8 +216,8 @@ public class PlacedOnlyBreakListener implements Listener {
 
     private void cleanupOldCacheEntries(long nowEpochSeconds) {
         // cheap periodic cleanup triggered on place events
-        for (var it = recentPlacements.entrySet().iterator(); it.hasNext();) {
-            var e = it.next();
+        for (Iterator<Map.Entry<BlockKey, Long>> it = recentPlacements.entrySet().iterator(); it.hasNext();) {
+            Map.Entry<BlockKey, Long> e = it.next();
             if (nowEpochSeconds - e.getValue() > CACHE_TTL_SECONDS) {
                 it.remove();
             }
@@ -276,7 +278,8 @@ public class PlacedOnlyBreakListener implements Listener {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof BlockKey other)) return false;
+            if (!(o instanceof BlockKey)) return false;
+            BlockKey other = (BlockKey) o;
             return x == other.x && y == other.y && z == other.z && world.equals(other.world);
         }
 
